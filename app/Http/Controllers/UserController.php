@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
+use Tymon\JWTAuth\JWTAuth;
+use Validator;
 
 class UserController extends Controller
 {
@@ -11,7 +15,7 @@ class UserController extends Controller
     {
         $token = null;
         try {
-            if (!$token = JWTAuth::attempt( ['email'=>$email, 'password'=>$password])) {
+            if (!$token = JWTAuth::attempt( ['email' => $email, 'password' => $password])) {
                 return response()->json([
                     'response' => 'error',
                     'message' => 'Password or email is invalid',
@@ -24,6 +28,7 @@ class UserController extends Controller
                 'message' => 'Token creation failed',
             ]);
         }
+
         return $token;
     }
 
@@ -42,39 +47,18 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Request
+     * @param CreateUser $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(CreateUser $request)
     {
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $password = $request->get('password');
-        $permission = $request->get('permission');
-
-        $user = new User();
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = bcrypt($password);
-        $user->permission = $permission;
-        $user->save();
+        $user = User::createUser($request->only('name', 'email', 'password', 'permission'));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'User Added',
+            'message'   => Lang::get('auth.user_added'),
             'user'      => $user
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
