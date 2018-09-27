@@ -14,16 +14,18 @@ use Illuminate\Http\Request;
 */
 
 Route::group([
-    'middleware' => ['api', 'jwt-auth']
+    'middleware' => ['api']
     ], function ($router) {
 
     /** POST Routes */
+    Route::post('register', 'UserController@create');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    Route::post('register', 'UserController@create');
+    Route::post('add_timezone', 'TimezoneController@store');
 
     /** GET Routes */
     Route::get('users', 'UserController@index');
+    Route::get('timezone/{id}', 'TimezoneController@show');
 });
