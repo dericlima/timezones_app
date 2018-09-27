@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+
+use App\Http\Requests\LoginUser;
+use Illuminate\Support\Facades\Lang;
 
 class AuthController extends Controller
 {
@@ -19,14 +21,15 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param LoginUser $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(LoginUser $request)
     {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $credentials = $request->only('email', 'password');
+        $token = auth()->attempt($credentials);
+        if (!$token) {
+            return response()->json(['error' => Lang::get('auth.login_failed')], 401);
         }
 
         return $this->respondWithToken($token);

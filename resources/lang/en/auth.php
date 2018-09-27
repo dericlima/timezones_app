@@ -15,5 +15,6 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'user_added' => 'New user added with success!'
+    'user_added' => 'New user added with success!',
+    'login_failed' => 'Those credentials doesn\'t match with our records'
 ];
