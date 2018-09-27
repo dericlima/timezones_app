@@ -14,11 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::group([
-    'middleware' => 'api',
-    'prefix'     => 'auth'
+    'middleware' => ['api', 'jwt-auth']
     ], function ($router) {
+
+    /** POST Routes */
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::post('register', 'UserController@create');
+
+    /** GET Routes */
+    Route::get('users', 'UserController@index');
 });
