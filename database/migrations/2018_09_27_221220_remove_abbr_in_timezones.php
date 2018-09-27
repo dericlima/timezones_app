@@ -26,7 +26,7 @@ class RemoveAbbrInTimezones extends Migration
     public function down()
     {
         Schema::table('timezones', function (Blueprint $table) {
-            $table->string('abbr');
+            $table->string('abbr')->nullable();
         });
     }
 }

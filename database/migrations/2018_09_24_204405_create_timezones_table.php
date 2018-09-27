@@ -17,7 +17,7 @@ class CreateTimezonesTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('abbr', 255);
-            $table->integer('offset');
+            $table->float('offset');
             $table->timestamps();
         });
     }
