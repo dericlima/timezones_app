@@ -22,7 +22,7 @@ const Menu = (props) => (
     </ul>
 );
 
-export default class Index extends Component {
+export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,7 +56,7 @@ export default class Index extends Component {
 
 if (document.getElementById('app')) {
     ReactDOM.render(
-        <Index />,
+        <Main />,
         document.getElementById('app')
     );
 }
