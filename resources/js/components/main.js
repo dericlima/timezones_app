@@ -31,6 +31,7 @@ export default class Main extends Component {
             isAuthenticated: false,
             token: null
         });
+        localStorage.removeItem('jwt');
     }
 
     refresh() {
@@ -81,22 +82,30 @@ const Menu = (props) => (
                 </NavLink>
             </List.Content>
         </List.Item>
-        <List.Item>
-            <List.Icon name='users' />
-            <List.Content>
-                <NavLink exact activeClassName="active" to="/register">
-                    Register
-                </NavLink>
-            </List.Content>
-        </List.Item>
-        <List.Item>
-            <List.Icon name='marker' />
-            <List.Content>
-                <NavLink exact activeClassName="active" to="/login">
-                    Login
-                </NavLink>
-            </List.Content>
-        </List.Item>
+        {!props.isAuthenticated ?
+            <List.Item>
+                <List.Icon name='users'/>
+                <List.Content>
+                    <NavLink exact activeClassName="active" to="/register">
+                        Register
+                    </NavLink>
+                </List.Content>
+            </List.Item>
+            :
+            null
+        }
+        {!props.isAuthenticated ?
+            <List.Item>
+                <List.Icon name='marker'/>
+                <List.Content>
+                    <NavLink exact activeClassName="active" to="/login">
+                        Login
+                    </NavLink>
+                </List.Content>
+            </List.Item>
+            :
+            null
+        }
         {props.isAuthenticated ?
             <List.Item>
                 <List.Icon name='linkify' />

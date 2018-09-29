@@ -22292,6 +22292,7 @@ var Main = function (_Component) {
                 isAuthenticated: false,
                 token: null
             });
+            localStorage.removeItem('jwt');
         }
     }, {
         key: 'refresh',
@@ -22367,7 +22368,7 @@ var Menu = function Menu(props) {
                 )
             )
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        !props.isAuthenticated ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_7_semantic_ui_react__["a" /* List */].Item,
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_semantic_ui_react__["a" /* List */].Icon, { name: 'users' }),
@@ -22380,8 +22381,8 @@ var Menu = function Menu(props) {
                     'Register'
                 )
             )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        ) : null,
+        !props.isAuthenticated ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_7_semantic_ui_react__["a" /* List */].Item,
             null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7_semantic_ui_react__["a" /* List */].Icon, { name: 'marker' }),
@@ -22394,7 +22395,7 @@ var Menu = function Menu(props) {
                     'Login'
                 )
             )
-        ),
+        ) : null,
         props.isAuthenticated ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_7_semantic_ui_react__["a" /* List */].Item,
             null,
