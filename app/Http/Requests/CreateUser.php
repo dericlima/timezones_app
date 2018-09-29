@@ -26,8 +26,8 @@ class CreateUser extends FormRequest
         return [
             'name'          => 'required|max:255',
             'email'         => 'required|email|max:255|unique:users',
-            'permission'    => 'required|max:255',
-            'password'      => 'required|max:255'
+            'password'      => 'required|max:255',
+            'password_confirmation' => 'required|max:255|same:password'
         ];
     }
 }

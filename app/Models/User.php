@@ -55,7 +55,7 @@ class User extends Authenticatable implements JWTSubject
         $user->name         = $data['name'];
         $user->email        = $data['email'];
         $user->password     = bcrypt($data['password']);
-        $user->permission   = $data['permission'];
+        $user->permission   = 'regular';
         $user->save();
 
         return $user;

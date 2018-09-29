@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Timezone from './Timezone';
+import Register from './Register';
 import { List } from 'semantic-ui-react';
 
 export default class Main extends Component {
@@ -61,6 +62,7 @@ export default class Main extends Component {
                     <Switch>
                         <Route exact path='/' component={Home} />
                         <Route exact path='/login' render={(props) => <Login authenticate={this.authenticate} isAuthenticated={this.state.isAuthenticated} {...props} />} />
+                        <Route exact path='/register' component={Register} />
                         <PrivateRoute exact path='/timezones' component={Timezone} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
                     </Switch>
                 </div>
@@ -80,6 +82,14 @@ const Menu = (props) => (
             </List.Content>
         </List.Item>
         <List.Item>
+            <List.Icon name='users' />
+            <List.Content>
+                <NavLink exact activeClassName="active" to="/register">
+                    Register
+                </NavLink>
+            </List.Content>
+        </List.Item>
+        <List.Item>
             <List.Icon name='marker' />
             <List.Content>
                 <NavLink exact activeClassName="active" to="/login">
@@ -87,14 +97,18 @@ const Menu = (props) => (
                 </NavLink>
             </List.Content>
         </List.Item>
-        <List.Item>
-            <List.Icon name='linkify' />
-            <List.Content>
-                <NavLink exact activeClassName="active" to="/timezones">
-                    Timezones
-                </NavLink>
-            </List.Content>
-        </List.Item>
+        {props.isAuthenticated ?
+            <List.Item>
+                <List.Icon name='linkify' />
+                <List.Content>
+                    <NavLink exact activeClassName="active" to="/timezones">
+                        Timezones
+                    </NavLink>
+                </List.Content>
+            </List.Item>
+            :
+            null
+        }
         {props.isAuthenticated ?
             <List.Item>
                 <List.Content>

@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function create(CreateUser $request)
     {
-        $user = User::createUser($request->only('name', 'email', 'password', 'permission'));
+        $user = User::createUser($request->only('name', 'email', 'password', 'password_confirmation'));
 
         return response()->json([
             'success'   => true,
