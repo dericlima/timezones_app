@@ -23,10 +23,7 @@ class TimezoneController extends Controller
     {
         $timezones = Timezone::all();
 
-        return response()->json([
-            'success' => true,
-            'data' => $timezones
-        ]);
+        return response()->json($timezones);
     }
 
     /**

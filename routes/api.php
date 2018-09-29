@@ -21,11 +21,11 @@ Route::group([
     Route::post('register', 'UserController@create');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::post('add_timezone', 'TimezoneController@store');
 
     /** GET Routes */
+    Route::get('refresh', 'AuthController@refresh');
     Route::get('users', 'UserController@index');
     Route::get('timezone/{id}', 'TimezoneController@show');
     Route::get('timezones', 'TimezoneController@index');
