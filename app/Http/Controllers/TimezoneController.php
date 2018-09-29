@@ -21,7 +21,12 @@ class TimezoneController extends Controller
      */
     public function index()
     {
+        $timezones = Timezone::all();
 
+        return response()->json([
+            'success' => true,
+            'data' => $timezones
+        ]);
     }
 
     /**

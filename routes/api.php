@@ -28,4 +28,5 @@ Route::group([
     /** GET Routes */
     Route::get('users', 'UserController@index');
     Route::get('timezone/{id}', 'TimezoneController@show');
+    Route::get('timezones', 'TimezoneController@index');
 });
