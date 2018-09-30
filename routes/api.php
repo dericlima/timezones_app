@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
 Route::group([
     'middleware' => ['api']
     ], function ($router) {
@@ -29,4 +31,5 @@ Route::group([
     Route::get('users', 'UserController@index');
     Route::get('timezone/{id}', 'TimezoneController@show');
     Route::get('timezones', 'TimezoneController@index');
+    Route::get('cities/{user}', 'CitiesController@index');
 });

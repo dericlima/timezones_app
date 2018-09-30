@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\City;
+use App\Models\Timezone;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +26,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('id', '[0-9]+');
 
         parent::boot();
+
+        Route::model('user', User::class);
+        Route::model('city', City::class);
+        Route::model('timezone', Timezone::class);
     }
 
     /**

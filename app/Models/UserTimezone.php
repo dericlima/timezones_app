@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserTimezone extends Model
 {
-    //
+    protected $table = 'user_timezones';
 }

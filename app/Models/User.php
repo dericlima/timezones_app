@@ -7,6 +7,18 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * Class User
+ *
+ * @package App\Models
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $password_confirmation
+ * @property string $permission
+ * @property-read object cities
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -49,6 +61,23 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * Return all cities that belongs to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cities()
+    {
+        return $this->belongsToMany(City::class, 'cities_users')
+            ->whereNull('deleted_at');
+    }
+
+    /**
+     * Add a new user
+     *
+     * @param $data
+     * @return User
+     */
     public static function createUser($data)
     {
         $user               = new User();
