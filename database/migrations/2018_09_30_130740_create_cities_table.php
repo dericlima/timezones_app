@@ -21,6 +21,7 @@ class CreateCitiesTable extends Migration
             $table->unsignedInteger('timezone_id');
             $table->foreign('timezone_id')->references('id')->on('timezones');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
