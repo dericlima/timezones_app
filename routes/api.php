@@ -17,7 +17,9 @@ use Illuminate\Http\Request;
 
 Route::group([
     'middleware' => ['api']
-    ], function ($router) {
+    ], function () {
+
+    /** PUBLIC ROUTES */
 
     /** POST Routes */
     Route::post('register', 'UserController@create');
@@ -30,6 +32,21 @@ Route::group([
     Route::get('refresh', 'AuthController@refresh');
     Route::get('users', 'UserController@index');
     Route::get('timezone/{id}', 'TimezoneController@show');
-    Route::get('timezones', 'TimezoneController@index');
-    Route::get('cities/{user}', 'CitiesController@index');
+
+    /** PROTECTED ROUTES */
+    Route::group([
+        'middleware' => ['jwt.auth']
+    ], function () {
+
+        /** GET Routes */
+        Route::get('timezones', 'TimezoneController@index');
+        Route::get('cities/', 'CitiesController@index');
+
+        /** POST Routes */
+        Route::post('add_city', 'CitiesController@store');
+        Route::post('update_city/{city}', 'CitiesController@update');
+
+        /** DELETE Routes */
+        Route::delete('city/{city}', 'CitiesController@destroy');
+    });
 });
