@@ -5,15 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddTimezone;
 use App\Models\Timezone;
 use App\Models\UserTimezone;
-use Illuminate\Http\Request;
 
 class TimezoneController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('jwt-auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,16 +18,6 @@ class TimezoneController extends Controller
         $timezones = Timezone::all();
 
         return response()->json($timezones);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -68,39 +52,5 @@ class TimezoneController extends Controller
             'success'   => true,
             'data'      => $timezone
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
