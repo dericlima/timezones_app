@@ -38,7 +38,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -68,8 +68,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function cities()
     {
-        return $this->belongsToMany(City::class, 'cities_users')
-            ->whereNull('deleted_at');
+        return $this->belongsToMany(City::class, 'cities_users');
     }
 
     /**
