@@ -22,3 +22,19 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'permission'     => 'regular'
     ];
 });
+
+$factory->define(App\Models\City::class, function (Faker $faker) {
+    return [
+        'name'        => $faker->name,
+        'lat'         => $faker->latitude,
+        'long'        => $faker->longitude,
+        'timezone_id' => $faker->numberBetween(1, 30),
+    ];
+});
+
+$factory->define(\App\Models\CitiesUser::class, function () {
+    return [
+        'user_id' => 1,
+        'city_id' => 1
+    ];
+});
