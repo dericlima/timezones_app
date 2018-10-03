@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class Login extends React.Component {
     constructor() {
@@ -30,6 +30,7 @@ class Login extends React.Component {
             this.setState({ error: '' });
             const token = response.data.access_token;
             this.props.authenticate(token);
+            this.props.history.push('/my_cities');
         })
         .catch((error) => {
             const status = error.response.status;
@@ -47,7 +48,7 @@ class Login extends React.Component {
         }
 
         return(
-            <div>
+            <div className='animated fadeInUpBig col-sm-4 offset-sm-3'>
                 <h1>Login</h1>
                 {this.state.error !== '' ?
                     <p className="text-danger">{this.state.error}</p>

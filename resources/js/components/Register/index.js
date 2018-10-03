@@ -125,7 +125,7 @@ class Register extends React.Component{
         }
         const {errors} = this.state;
         return(
-            <div>
+            <div className='animated wobble col-sm-4 offset-sm-3'>
                 <h1>Register User</h1>
                     <form onSubmit={this.handleSubmit}>
                         <div className='form-group'>

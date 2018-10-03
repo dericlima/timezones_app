@@ -5,14 +5,19 @@ import Home from './Home';
 import Login from './Login';
 import Timezone from './Timezone';
 import Register from './Register';
-import { List } from 'semantic-ui-react';
+import Menu from './Menu';
+import City from './City';
+import AddCity from './AddCity';
+import PrivateRoute from './../routes/Private';
+import Header from './Header';
 
 export default class Main extends Component {
     constructor() {
         super();
         this.state = {
             isAuthenticated: false,
-            token: null
+            token: null,
+            user: null
         };
         this.authenticate = this.authenticate.bind(this);
         this.logout = this.logout.bind(this);
@@ -40,17 +45,19 @@ export default class Main extends Component {
         })
         .then((response) => {
             const token = response.data.token;
-            this.authenticate(token);
+            const user = response.data.user;
+            this.authenticate(token, user);
         })
         .catch((error) => {
             console.log('Error!', error);
         });
     }
 
-    authenticate(token) {
+    authenticate(token, user) {
         this.setState({
             isAuthenticated: true,
-            token: token
+            token: token,
+            user: user
         });
         localStorage.setItem('jwt', token);
     }
@@ -58,92 +65,28 @@ export default class Main extends Component {
     render() {
         return (
             <HashRouter>
-                <div>
-                    <Menu isAuthenticated={this.state.isAuthenticated} logout={this.logout}/>
-                    <Switch>
-                        <Route exact path='/' component={Home} />
-                        <Route exact path='/login' render={(props) => <Login authenticate={this.authenticate} isAuthenticated={this.state.isAuthenticated} {...props} />} />
-                        <Route exact path='/register' component={Register} />
-                        <PrivateRoute exact path='/timezones' component={Timezone} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
-                    </Switch>
+                <div className='container-fluid'>
+                    <Header />
+                    <div className='row content'>
+                        <div className='col-sm-3 sidenav header-menu'>
+                            <Menu isAuthenticated={this.state.isAuthenticated} logout={this.logout}/>
+                        </div>
+                        <div className='col-sm-9'>
+                            <Switch>
+                                <Route exact path='/' component={Home} />
+                                <Route exact path='/login' render={(props) => <Login authenticate={this.authenticate} isAuthenticated={this.state.isAuthenticated} {...props} />} />
+                                <Route exact path='/register' component={Register} />
+                                <PrivateRoute exact path='/timezones' component={Timezone} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
+                                <PrivateRoute exact path='/cities' component={City} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
+                                <PrivateRoute exact path='/add_city' component={AddCity} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
+                            </Switch>
+                        </div>
+                    </div>
                 </div>
             </HashRouter>
         );
     }
 }
-
-const Menu = (props) => (
-    <List>
-        <List.Item>
-            <List.Icon name='users' />
-            <List.Content>
-                <NavLink exact activeClassName="active" to="/">
-                    Home
-                </NavLink>
-            </List.Content>
-        </List.Item>
-        {!props.isAuthenticated ?
-            <List.Item>
-                <List.Icon name='users'/>
-                <List.Content>
-                    <NavLink exact activeClassName="active" to="/register">
-                        Register
-                    </NavLink>
-                </List.Content>
-            </List.Item>
-            :
-            null
-        }
-        {!props.isAuthenticated ?
-            <List.Item>
-                <List.Icon name='marker'/>
-                <List.Content>
-                    <NavLink exact activeClassName="active" to="/login">
-                        Login
-                    </NavLink>
-                </List.Content>
-            </List.Item>
-            :
-            null
-        }
-        {props.isAuthenticated ?
-            <List.Item>
-                <List.Icon name='linkify' />
-                <List.Content>
-                    <NavLink exact activeClassName="active" to="/timezones">
-                        Timezones
-                    </NavLink>
-                </List.Content>
-            </List.Item>
-            :
-            null
-        }
-        {props.isAuthenticated ?
-            <List.Item>
-                <List.Content>
-                    <a href="#" onClick={props.logout}>
-                        Logout
-                    </a>
-                </List.Content>
-            </List.Item>
-            :
-            null
-        }
-    </List>
-);
-
-const PrivateRoute = ({ component: Component, isAuthenticated, token, ...rest }) => (
-    <Route {...rest} render={props => (
-        isAuthenticated ? (
-            <Component {...props} {...rest} token={token} isAuthenticated={isAuthenticated} />
-        ) : (
-            <Redirect to={{
-                pathname: '/login',
-                state: { from: props.location }
-            }} />
-        )
-    )} />
-);
 
 if (document.getElementById('app')) {
     ReactDOM.render(

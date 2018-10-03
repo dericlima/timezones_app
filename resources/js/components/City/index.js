@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Timezone extends React.Component {
+class City extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -23,18 +23,18 @@ class Timezone extends React.Component {
         axios.get('/api/cities', {
             headers: { 'Authorization': 'Bearer ' + token }
         })
-        .then((response) => {
-            const cities = response.data;
-            this.setState({ cities });
-        })
-        .catch((error) => {
-            const status = error.response.status;
-            if (status === 401 && this.props.isAuthenticated) {
+            .then((response) => {
+                const cities = response.data;
+                this.setState({ cities });
+            })
+            .catch((error) => {
+                const status = error.response.status;
+                if (status === 401 && this.props.isAuthenticated) {
 
-                /** User is logged in but the token in invalid */
-                this.props.refresh();
-            }
-        });
+                    /** User is logged in but the token in invalid */
+                    this.props.refresh();
+                }
+            });
     }
 
     render() {
@@ -45,7 +45,9 @@ class Timezone extends React.Component {
                     return (
                         <div className="city" key={index}>
                             {city.name}<br />
-                            {city.timezone_id}<br />
+                            {city.lat}<br />
+                            {city.long}<br />
+                            {city.timezone.name}<br />
                             <hr />
                         </div>
                     )
@@ -55,4 +57,4 @@ class Timezone extends React.Component {
     }
 }
 
-export default Timezone;
+export default City;
