@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddCity;
 use App\Models\City;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 class CitiesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Return all cities that belongs to a user account
      *
-     * @param $user User
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
-        $cities = $user->cities;
+        $cities = auth()->user()->cities;
 
         return response()->json([
-           $cities
+            'success' => true,
+            'cities'  => $cities
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AddCity $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddCity $request)
     {
-        $city = City::createCity($request->only('name', 'lat', 'long', 'user_id', 'timezone_id'));
+        $city = City::createCity($request->only('name', 'lat', 'long', 'timezone_id'));
 
         return response()->json([
             'success'   => true,
@@ -60,13 +60,23 @@ class CitiesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deletes a city
      *
      * @param  City  $city
      * @return \Illuminate\Http\Response
      */
     public function destroy($city)
     {
+        $user = $city->users()
+            ->where('cities_users.user_id', auth()->user()->id)
+            ->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => Lang::get('general_messages.no_permission')
+            ], 403);
+        }
+
         try {
             $city->delete();
         } catch (\Exception $e) {

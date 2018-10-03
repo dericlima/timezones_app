@@ -18,5 +18,6 @@ return [
     */
 
     'general_error' => 'Ops! Something went wrong!',
-    'city_deleted' => 'City deleted with success!'
+    'city_deleted' => 'City deleted with success!',
+    'no_permission' => 'You do not have permission to execute this operation'
 ];

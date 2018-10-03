@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class City
  *
@@ -16,7 +16,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class City extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'cities';
+
+    protected $hidden = ['pivot', 'timezone_id'];
+
+    protected $dates = ['deleted_at'];
+
+    /**
+     * Return all users that have this city
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'cities_users');
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);        
+    }
 
     /**
      * Add a new city
@@ -35,8 +56,9 @@ class City extends Model
 
         /** Link city to the user */
         $city_user = new CitiesUser();
-        $city_user->user_id = $data['user_id'];
+        $city_user->user_id = auth()->user()->id;
         $city_user->city_id = $city->id;
+        $city_user->save();
 
         return $city_user;
     }
@@ -50,12 +72,24 @@ class City extends Model
      */
     public static function updateCity($data, $city)
     {
-        $city->name         = $data['name'];
-        $city->lat          = $data['lat'];
-        $city->long         = $data['long'];
-        $city->timezone_id  = $data['timezone_id'];
+        foreach ($data as $key => $value) {
+            $city->{$key} = $value;
+        }
         $city->save();
 
         return $city;
+    }
+
+    /**
+     * Cast model values to a array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['timezone'] = $this->timezone;
+
+        return $data;
     }
 }
