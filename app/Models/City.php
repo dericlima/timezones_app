@@ -49,8 +49,6 @@ class City extends Model
     {
         $city               = new City();
         $city->name         = $data['name'];
-        $city->lat          = $data['lat'];
-        $city->long         = $data['long'];
         $city->timezone_id  = $data['timezone_id'];
         $city->save();
 

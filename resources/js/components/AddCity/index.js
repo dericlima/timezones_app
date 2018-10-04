@@ -19,7 +19,8 @@ class AddCity extends React.Component {
                 timezone_id: ''
             },
             timezone: null,
-            selectedTimezone: null
+            selectedTimezone: null,
+            isSuccess: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
@@ -75,10 +76,6 @@ class AddCity extends React.Component {
     submit(city) {
         axios.post('/api/add_city', {
             name: city.name,
-            lat: 10.254,
-            long: 41.2654,
-            // lat: city.lat,
-            // long: city.long,
             timezone_id: this.state.selectedTimezone.id,
             token: this.props.token
         })
@@ -98,6 +95,7 @@ class AddCity extends React.Component {
                 },
                 error: ''
             });
+            this.props.history.push('/my_cities');
         })
         .catch(({error, statusCode}) => {
             const responseError = {

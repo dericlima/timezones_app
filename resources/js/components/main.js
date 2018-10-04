@@ -10,6 +10,7 @@ import City from './City';
 import AddCity from './AddCity';
 import PrivateRoute from './../routes/Private';
 import Header from './Header';
+import 'moment-timezone';
 
 export default class Main extends Component {
     constructor() {
@@ -77,7 +78,7 @@ export default class Main extends Component {
                                 <Route exact path='/login' render={(props) => <Login authenticate={this.authenticate} isAuthenticated={this.state.isAuthenticated} {...props} />} />
                                 <Route exact path='/register' component={Register} />
                                 <PrivateRoute exact path='/timezones' component={Timezone} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
-                                <PrivateRoute exact path='/cities' component={City} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
+                                <PrivateRoute exact path='/my_cities' component={City} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
                                 <PrivateRoute exact path='/add_city' component={AddCity} isAuthenticated={this.state.isAuthenticated} token={this.state.token} refresh={this.refresh} />
                             </Switch>
                         </div>

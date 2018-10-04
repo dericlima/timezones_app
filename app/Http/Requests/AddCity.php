@@ -25,8 +25,6 @@ class AddCity extends FormRequest
     {
         return [
             'name'          => 'required|max:255',
-            'lat'           => 'required',
-            'long'          => 'required',
             'timezone_id'   => 'required'
         ];
     }

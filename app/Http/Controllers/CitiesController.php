@@ -50,7 +50,7 @@ class CitiesController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        $city = City::updateCity($request->only('name', 'lat', 'long', 'user_id', 'timezone_id'), $city);
+        $city = City::updateCity($request->only('name', 'user_id', 'timezone_id'), $city);
 
         return response()->json([
             'success'   => true,

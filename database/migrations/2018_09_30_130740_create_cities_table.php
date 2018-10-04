@@ -16,8 +16,6 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->float('lat');
-            $table->float('long');
             $table->unsignedInteger('timezone_id');
             $table->foreign('timezone_id')->references('id')->on('timezones');
             $table->timestamps();

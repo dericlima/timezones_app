@@ -10,5 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Timezone extends Model
 {
-    //
+    protected $casts = [
+      'offset' => 'float'
+    ];
 }

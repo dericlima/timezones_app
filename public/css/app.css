@@ -14126,3 +14126,32 @@ footer {
   padding-top: 20px;
 }
 
+.alerts-leave {
+  opacity: 1;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  height: 50px;
+}
+
+.alerts-leave.alerts-leave-active {
+  overflow: hidden;
+  opacity: 0.01;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  height: 0px;
+  -webkit-transition: opacity 300ms ease-in, padding-top 500ms ease-in, padding-bottom 500ms ease-in, margin-bottom 500ms ease-in, height 500ms ease-in;
+  transition: opacity 300ms ease-in, padding-top 500ms ease-in, padding-bottom 500ms ease-in, margin-bottom 500ms ease-in, height 500ms ease-in;
+}
+
+.city-color {
+  background-color: #5984cc;
+}
+
+.page-main-header {
+  padding-bottom: 9px;
+  margin: 40px 0 0px;
+  border-bottom: 1px solid #eeeeee;
+}
+
