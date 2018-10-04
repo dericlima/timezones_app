@@ -99,6 +99,7 @@ class Register extends React.Component{
                 },
                 error: ''
             });
+            this.props.history.push('/login');
         })
         .catch(({error, statusCode}) => {
             const responseError = {
